@@ -1,20 +1,18 @@
-# Usa Java 21
-FROM eclipse-temurin:21-jdk
+# 🔥 ETAPA 1 - build com Maven
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 
-# Pasta da aplicação
 WORKDIR /app
-
-# Copia tudo
 COPY . .
 
-# Dá permissão pro mvnw (caso tenha)
-RUN chmod +x mvnw || true
+RUN mvn clean package -DskipTests
 
-# Build do projeto
-RUN ./mvnw clean package || mvn clean package
+# 🔥 ETAPA 2 - rodar o jar
+FROM eclipse-temurin:21-jdk
 
-# Porta do Spring
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
 EXPOSE 8080
 
-# Rodar aplicação
-CMD ["java", "-jar", "target/telegram-bot-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
