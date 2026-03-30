@@ -9,13 +9,3 @@ news:
     key: ${NEWS_API_KEY}
 
 
-telegram:
-  bot:
-    token: 8690768096:AAGOg9BGyedzXmP9fjM3g84BKFeWHc1ZooY
-    username: Macnews2026_bot
-
-
-
-news:
-  api:
-    key: 21f294cc95f2192988b3eaa4cafee1ec
