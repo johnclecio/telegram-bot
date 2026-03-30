@@ -1,6 +1,7 @@
 package com.johnlima.telegrambot.service;
 
 import com.johnlima.telegrambot.client.CryptoClient;
+import com.johnlima.telegrambot.client.IbovespaClient;
 import com.johnlima.telegrambot.client.NewsClient;
 import org.springframework.stereotype.Service;
 
@@ -8,16 +9,14 @@ import org.springframework.stereotype.Service;
 public class MercadoService {
 
     private final CryptoClient cryptoClient;
-    private final NewsClient newsClient;
+    private final IbovespaClient ibovespaClient;
 
-    // 👇 injeta os DOIS aqui
-    public MercadoService(CryptoClient cryptoClient, NewsClient newsClient) {
+    public MercadoService(CryptoClient cryptoClient, IbovespaClient ibovespaClient) {
         this.cryptoClient = cryptoClient;
-        this.newsClient = newsClient;
+        this.ibovespaClient = ibovespaClient;
     }
 
     public String getPrecoBitcoin() {
-
         double valor = cryptoClient.buscarPrecoBitcoin();
 
         if (valor == 0) {
@@ -28,10 +27,6 @@ public class MercadoService {
     }
 
     public String getIbovespa() {
-        return "📊 IBOVESPA: 130.000 pontos (mock)";
-    }
-
-    public String getNoticiasGuerra() {
-        return newsClient.buscarNoticiasGuerra();
+        return ibovespaClient.buscarIbovespa();
     }
 }
