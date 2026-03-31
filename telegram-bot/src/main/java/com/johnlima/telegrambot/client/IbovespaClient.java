@@ -1,6 +1,7 @@
 package com.johnlima.telegrambot.client;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.slf4j.Logger;
@@ -11,12 +12,16 @@ public class IbovespaClient {
 
     private static final Logger log = LoggerFactory.getLogger(IbovespaClient.class);
 
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    // Injeta o token da variável de ambiente
+    @Value("${ibovespa.api.token}")
+    private String token;
+
     public String buscarIbovespa() {
-
         try {
-            String url = "https://brapi.dev/api/quote/%5EBVSP";
+            String url = "https://brapi.dev/api/quote/%5EBVSP?token=" + token;
 
-            RestTemplate restTemplate = new RestTemplate();
             String response = restTemplate.getForObject(url, String.class);
 
             JSONObject json = new JSONObject(response);

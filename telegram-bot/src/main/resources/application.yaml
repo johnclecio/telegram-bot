@@ -15,4 +15,4 @@ bitcoin:
 
 ibovespa:
   api:
-    url: https://brapi.dev/api/quote/%5EBVSP
+    token: ${BRAPI_TOKEN}
