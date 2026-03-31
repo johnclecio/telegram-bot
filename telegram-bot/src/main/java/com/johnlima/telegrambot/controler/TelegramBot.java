@@ -39,23 +39,14 @@ public class TelegramBot extends TelegramLongPollingBot {
 
             String resposta;
 
-            // 🔥 COMANDOS DO BOT
-            if (mensagem.contains("bitcoin")) {
-                resposta = mercadoService.getPrecoBitcoin();
-
-            } else if (mensagem.contains("bovespa")) {
-                resposta = mercadoService.getIbovespa();
-
-            } else if (mensagem.contains("guerra")) {
+            // 🔥 COMANDO DO BOT
+            if (mensagem.contains("guerra")) {
                 resposta = mercadoService.getNoticiasGuerra();
-
             } else {
                 resposta = """
-            🤖 Comandos disponíveis:
-            - bitcoin
-            - bovespa
-            - guerra
-            """;
+                🤖 Comandos disponíveis:
+                - guerra
+                """;
             }
 
             enviarMensagem(chatId, resposta);
