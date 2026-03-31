@@ -10,10 +10,12 @@ public class MercadoService {
 
     private final CryptoClient cryptoClient;
     private final IbovespaClient ibovespaClient;
+    private final NewsClient newsClient;
 
-    public MercadoService(CryptoClient cryptoClient, IbovespaClient ibovespaClient) {
+    public MercadoService(CryptoClient cryptoClient, IbovespaClient ibovespaClient, NewsClient newsClient) {
         this.cryptoClient = cryptoClient;
         this.ibovespaClient = ibovespaClient;
+        this.newsClient = newsClient;
     }
 
     public String getPrecoBitcoin() {
@@ -28,5 +30,14 @@ public class MercadoService {
 
     public String getIbovespa() {
         return ibovespaClient.buscarIbovespa();
+    }
+
+
+
+
+
+    // ✅ Adicione este método
+    public String getNoticiasGuerra() {
+        return newsClient.buscarNoticiasGuerra();
     }
 }
