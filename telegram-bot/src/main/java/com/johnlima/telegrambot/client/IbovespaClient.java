@@ -12,24 +12,39 @@ public class IbovespaClient {
 
     private static final Logger log = LoggerFactory.getLogger(IbovespaClient.class);
 
-    private final RestTemplate restTemplate = new RestTemplate();
-
-    // Injeta o token da variável de ambiente
-    @Value("${ibovespa.api.token}")
+    // Token da API BRAPI (se houver)
+    @Value("${ibovespa.api.token:}")
     private String token;
+
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public String buscarIbovespa() {
         try {
-            String url = "https://brapi.dev/api/quote/%5EBVSP?token=" + token;
+            // URL da API, adicionando token se existir
+            String url = "https://brapi.dev/api/quote/%5EBVSP";
+            if (token != null && !token.isEmpty()) {
+                url += "?token=" + token;
+            }
 
+            // Fazendo a requisição HTTP
             String response = restTemplate.getForObject(url, String.class);
+            log.info("Resposta da API Ibovespa: {}", response);
 
             JSONObject json = new JSONObject(response);
-            double pontos = json.getJSONArray("results")
-                    .getJSONObject(0)
-                    .getDouble("regularMarketPrice");
 
-            return String.format("📊 IBOVESPA agora: %.2f pontos", pontos);
+            // Verifica se "results" existe e tem elementos
+            if (json.has("results") && json.getJSONArray("results").length() > 0) {
+                JSONObject primeiro = json.getJSONArray("results").getJSONObject(0);
+
+                // Verifica se "regularMarketPrice" existe
+                if (primeiro.has("regularMarketPrice")) {
+                    double pontos = primeiro.getDouble("regularMarketPrice");
+                    return String.format("📊 IBOVESPA agora: %.2f pontos", pontos);
+                }
+            }
+
+            log.warn("Dados de IBOVESPA não encontrados no JSON");
+            return "IBOVESPA indisponível no momento 😢";
 
         } catch (Exception e) {
             log.error("Erro ao buscar IBOVESPA", e);
