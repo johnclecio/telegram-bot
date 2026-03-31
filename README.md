@@ -5,9 +5,7 @@ Bot desenvolvido com Spring Boot que integra APIs externas para fornecer informa
 ---
 ## 📌 Funcionalidades
 
-💰 Consulta do preço do Bitcoin
 
-📊 Consulta do índice IBOVESPA (mock)
 
 🌍 Últimas notícias sobre guerra (API externa)
 
@@ -22,7 +20,7 @@ Bot desenvolvido com Spring Boot que integra APIs externas para fornecer informa
 
 🤖 Telegram Bots API
 
-🌐 REST APIs (GNews, Crypto)
+🌐 REST APIs (GNews)
 
 📦 Maven
 
@@ -43,7 +41,7 @@ Bot desenvolvido com Spring Boot que integra APIs externas para fornecer informa
         │   └── MercadoService.java
         │
         ├── client
-        │   ├── CryptoClient.java
+        │   ├
         │   └── NewsClient.java
         │
         └── TelegramBotApplication.java
@@ -68,8 +66,7 @@ No arquivo application.yml:
 
 No Telegram, envie:
 
-    bitcoin
-    bovespa
+   
     guerra
 
 --- 
